@@ -1,0 +1,10 @@
+{
+    "iron_sword":{
+        "iron": 2,
+        "wood_stick": 1
+    },
+    "stone_sword":{
+        "stone": 2,
+        "wood_stick": 1
+    }
+}
