@@ -1,0 +1,13 @@
+{
+    "bronze": {
+        "type": "material"
+    },
+    "gold": {
+        "type": "material"
+    },
+    "stone_sword":{
+        "type": "weapon",
+        "damage": 3
+    }
+
+}

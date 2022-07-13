@@ -1,4 +1,5 @@
 #include "map.h"
+//#include "util.h"
 
 int gen_ran_bet(int min, int max){
     return rand() % (max - min) + min;
@@ -48,14 +49,16 @@ void mrMap_gen_raw(mrMap *myMap){
     }
 }
 
-void mrMap_print(mrMap *myMap)
+void mrMap_print(mrMap *myMap, int *pos)
 {
     for (int i = 0; i < (myMap->shape[0]); ++i)
     {
         for (int j = 0; j < (myMap->shape[i + 1]); ++j)
         {
             
-            if (myMap->map_bool[i][j])
+            if (i == pos[0] && j == pos[1])
+                putchar('#');
+            else if (myMap->map_bool[i][j])
                 putchar(myMap->map_clear[i][j]);
             else
                 putchar('*');
@@ -63,6 +66,15 @@ void mrMap_print(mrMap *myMap)
         }
         putchar(10);
     }
+}
+
+void mrMap_menu(){
+    puts("\n\
+    w: go up\n\
+    s: go down\n\
+    a: go left\n\
+    d: go right\
+    ");
 }
 
 /*int main(void){

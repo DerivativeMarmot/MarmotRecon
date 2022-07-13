@@ -1750,7 +1750,7 @@ static cJSON_bool print_object(const cJSON * const item, printbuffer * const out
             }
             for (i = 0; i < output_buffer->depth; i++)
             {
-                *output_pointer++ = '\t';
+                *output_pointer++ = '\t'; // indentation after new line
             }
             output_buffer->offset += output_buffer->depth;
         }

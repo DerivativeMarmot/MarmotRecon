@@ -1,0 +1,10 @@
+#ifndef INVENTORY_H
+#define INVENTORY_H
+#include "recon_info.h"
+
+void inv_print(cJSON *);
+void inv_addItem(cJSON *, char* , int );
+void inv_subItem(cJSON *, char* , int );
+void inv_deleteItem(cJSON *, char*);
+
+#endif
