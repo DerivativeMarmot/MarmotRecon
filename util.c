@@ -2,28 +2,32 @@
 
 cJSON *file2Json(char *filename)
 {
-    FILE *fp = fopen(filename, "r");
-    if (fp)
+    if (access(filename, R_OK) == -1)
+        printf("\033[;31mACCESS\033[0m: No such file %s", filename);
+    else
     {
-        int length;
-        fseek(fp, 0, SEEK_END);
-        length = ftell(fp);
-        printf("%d\n", length);
-        fseek(fp, 0, SEEK_SET);
-        char buffer [length + 1];
-        fread(buffer, 1, length, fp);
-        fclose(fp);
-        buffer[length] = '\0';
-        //puts(buffer);
 
-        return cJSON_Parse(buffer);
+        FILE *fp = fopen(filename, "r");
+        if (fp)
+        {
+            int length;
+            fseek(fp, 0, SEEK_END);
+            length = ftell(fp);
+            fseek(fp, 0, SEEK_SET);
+            char buffer[length + 1];
+            fread(buffer, 1, length, fp);
+            fclose(fp);
+            buffer[length] = '\0';
+
+            return cJSON_Parse(buffer);
+        }
+        else
+        {
+            fprintf(stderr, "failed to open %s", filename);
+            exit(EXIT_FAILURE);
+        }
     }
-    else{
-        char buffer[40];
-        sprintf(buffer, "failed to open %s", filename);
-        perror(buffer);
-        return NULL;
-    }
+    return NULL;
 }
 
 char input_c(char *prompt){

@@ -12,9 +12,12 @@
 #include "cJSON/cJSON.h"
 #include "util.h"
 
-#define CHARACTER_JSON "Character.json"
+#define USER_JSON "User.json"
 #define ITEM_JSON "Item.json"
 #define RECIPE_JSON "RecipeBook.json"
+#define MAX_SAVE 3
+#define COMMON_PATH "savedata/save%d/"
+
 
 typedef struct Map{
     char **map_clear; // reveal all position

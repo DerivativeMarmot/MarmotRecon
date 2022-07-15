@@ -5,5 +5,6 @@
 cJSON *saveSelector(bool );
 cJSON *userInit(char *);
 cJSON *userLoad(char *);
+void save2file(cJSON *, mrMap *);
 
 #endif

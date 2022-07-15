@@ -5,7 +5,7 @@ int gen_ran_bet(int min, int max){
     return rand() % (max - min) + min;
 }
 
-void mrMap_gen_raw(mrMap *myMap){
+void mrMapInit(mrMap *myMap){
     int HEIGHT_MIN = 6;
     int HEIGHT_MAX = 10;
     int WIDTH_MIN = 16;
@@ -49,7 +49,7 @@ void mrMap_gen_raw(mrMap *myMap){
     }
 }
 
-void mrMap_print(mrMap *myMap, int *pos)
+void mrMapPrint(mrMap *myMap, int *pos)
 {
     for (int i = 0; i < (myMap->shape[0]); ++i)
     {
@@ -78,7 +78,7 @@ void mrMap_print(mrMap *myMap, int *pos)
     mrMap_print(myMR->myMap, myMR->myChara->position);
 }*/
 
-void mrMap_menu(){
+void mrMapMenu(){
     puts("\n\
     w: go up\n\
     s: go down\n\

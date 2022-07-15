@@ -1,9 +1,6 @@
 {
-    "name": "balabala",
-    "position":[0, 3],
-    "Inventory":{
-        "bronze": 1,
-        "gold": 10
-    }
-    
+	"name":	"derivative",
+	"position":	[0, 0],
+	"Inventory":	{
+	}
 }
