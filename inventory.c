@@ -18,15 +18,12 @@ void inv_print(cJSON *json)
         printf("%s %d\n", item->string, item->valueint);
         item = item->next;
     }
-    /*char *str = cJSON_Print(json);
-    puts(str);
-    free(str);*/
 }
 
 void inv_addItem(cJSON *json, char* itemName, int amount){
     cJSON *item = cJSON_GetObjectItemCaseSensitive(json, itemName);
     if (item == NULL)
-        cJSON_AddItemToObject(json, itemName, cJSON_CreateNumber(amount));
+        cJSON_AddNumberToObject(json, itemName, amount);
     else{
         cJSON_SetNumberHelper(item, item->valueint + amount);
     }
@@ -49,6 +46,11 @@ void inv_deleteItem(cJSON *json, char* itemName){
     cJSON_DeleteItemFromObjectCaseSensitive(json, itemName);
 }
 
+void inv_menu(){
+    puts("\n\
+    1. \
+    ");
+}
 /*int main(void){
     cJSON *json;
 

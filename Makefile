@@ -1,5 +1,5 @@
 EXE=marmotrecon.mrexe
-DEP=map.c character.c inventory.c util.c cJSON/cJSON.c 
+DEP=cJSON/cJSON.c util.c map.c character.c inventory.c savemgr.c
 
 all: $(EXE)
 

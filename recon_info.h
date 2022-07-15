@@ -6,10 +6,15 @@
 #include <string.h> // memset
 #include <time.h>
 #include <stdbool.h>
+#include <sys/stat.h> // mkdir()
+#include <unistd.h> // access()
+
 #include "cJSON/cJSON.h"
+#include "util.h"
 
 #define CHARACTER_JSON "Character.json"
 #define ITEM_JSON "Item.json"
+#define RECIPE_JSON "RecipeBook.json"
 
 typedef struct Map{
     char **map_clear; // reveal all position

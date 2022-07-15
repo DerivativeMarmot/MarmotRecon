@@ -37,6 +37,8 @@ char move(mrMap *myMap, int *pos, char direction){
     return myMap->map_clear[pos[0]][pos[1]];
 }
 
+
+
 /*cJSON *chara_load(mrChara *myChara){
     cJSON *json_CharaAttr = file2Json(CHARACTER_JSON);
 }

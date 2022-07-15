@@ -26,12 +26,38 @@ cJSON *file2Json(char *filename)
     }
 }
 
-char input(char *prompt){
-    printf("%s", prompt);
+char input_c(char *prompt){
+    if (strcmp(prompt, "\0") == 0){
+        printf("> ");
+    }else{
+        printf("%s\n> ", prompt);
+    }
     char c = getchar(); // get the first char from input
     while (getchar() != '\n') ; // drop the rest of char
     return c;
 }
+
+char *input_s(char *st, int n, char* prompt)
+{
+    if (strcmp(prompt, "\0") == 0){
+        printf("> ");
+    }else{
+        printf("%s\n> ", prompt);
+    }
+    int i = 0;
+    char *ret_val = fgets(st, n, stdin);
+    if (ret_val)
+    {
+        while (st[i] != '\0' && st[i] != '\n')
+            i++;
+        if (st[i] == '\n')
+            st[i] = '\0';
+        else
+            while (getchar() != '\n') ;
+    }
+    return ret_val;
+}
+
 
 //void colored_print()
 

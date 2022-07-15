@@ -68,6 +68,16 @@ void mrMap_print(mrMap *myMap, int *pos)
     }
 }
 
+/*mrMap_interacts(){
+    mrMap_menu();
+    char c = input("> ");
+    printf("%c\n", c);
+    if (move(myMR->myMap, myMR->myChara->position, c) == 'x'){
+        puts("You can not move in this direction anymore!");
+    }
+    mrMap_print(myMR->myMap, myMR->myChara->position);
+}*/
+
 void mrMap_menu(){
     puts("\n\
     w: go up\n\
