@@ -3,5 +3,6 @@
 #include "recon_info.h"
 
 char move(mrMap *, int *, char );
+void get_position(cJSON *, int *);
 
 #endif

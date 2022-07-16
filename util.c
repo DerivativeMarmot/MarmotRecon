@@ -6,7 +6,6 @@ cJSON *file2Json(char *filename)
         printf("\033[;31mACCESS\033[0m: No such file %s", filename);
     else
     {
-
         FILE *fp = fopen(filename, "r");
         if (fp)
         {

@@ -2,5 +2,19 @@
 	"name":	"derivative",
 	"position":	[0, 0],
 	"Inventory":	{
+	},
+	"Map":{
+		"shape": [],
+		"clear": [
+			[
+				"***#**",
+				"***#**"
+			]
+		],
+		"bool": [
+			[
+				[0, 0]
+			]
+		]
 	}
 }

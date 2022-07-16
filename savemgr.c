@@ -2,14 +2,14 @@
 
 // option == true means new game, otherwise load a save
 cJSON *saveSelector(bool option){
-    char *savepath;
+    //char *savepath;
     // prompt usable saves
     bool save_status[MAX_SAVE];
     for (int i=0; i<MAX_SAVE; ++i){
-        
         // allocate string of savepath
         int len = snprintf(NULL, 0, COMMON_PATH, i) + strlen(USER_JSON);
-        savepath = malloc (sizeof(char) * (len+1));
+        //savepath = malloc (sizeof(char) * (len+1));
+        char savepath[len+1];
         if (!savepath){
             fprintf(stderr, "\033[;31mmalloc: failed to allocate mem\033[0m");
             exit(EXIT_FAILURE);
@@ -31,6 +31,9 @@ cJSON *saveSelector(bool option){
     // let user select a save
     char c = input_c("Select a save");
     if (c >= '0' && c < MAX_SAVE + 48){ // save0 ~ save9
+        int len = snprintf(NULL, 0, COMMON_PATH, c-48) + strlen(USER_JSON);
+        char savepath[len+1];
+        savepath[len] = '\0';
         sprintf(savepath, COMMON_PATH, c-48);
         // new game
         if (option){
@@ -38,15 +41,20 @@ cJSON *saveSelector(bool option){
             if (save_status[c - 48]){
                 char c = input_c("\033[0;33mThis is a existing save. Are you sure to overwrite it?\033[0m(y/n)"); // yellow
                 while (1){
-                    if (c == 'Y' || c == 'y')
+                    if (c == 'Y' || c == 'y'){
                         puts("Save overwrited");
-                    else if (c == 'N' || c == 'n')
+                        break;
+                    }
+                    else if (c == 'N' || c == 'n'){
                         puts("Operation cancelled.");
+                        break;
+                    }
                     else
                         c = input_c("\0");
                 }
             }
             mkdir(savepath, S_IRWXU); // 700
+            strcat(savepath, USER_JSON);
             return userInit(savepath);
         }else{
             strcat(savepath, USER_JSON);
@@ -58,7 +66,6 @@ cJSON *saveSelector(bool option){
         puts("No such file");
     }
 
-    free(savepath);
     return NULL;
 }
 
@@ -88,7 +95,6 @@ cJSON *userInit(char *savepath){
     // create position
     int pos[2] = {0, 0};
     cJSON_AddItemToObject(user_json, "position", cJSON_CreateIntArray(pos, 2));
-
     // create inv
     cJSON_AddItemToObject(user_json, "Inventory", cJSON_CreateObject());
 
@@ -99,14 +105,15 @@ cJSON *userLoad(char *savepath){
     return file2Json(savepath);
 }
 
-void save2file(cJSON *json, mrMap *mymap){
-    char *json2str = cJSON_Print(json);
-    FILE *fp = fopen(cJSON_GetStringValue(cJSON_GetObjectItemCaseSensitive(json, "savepath")), "w");
+void save2file(cJSON *json){
+    char *savepath = cJSON_GetStringValue(cJSON_GetObjectItemCaseSensitive(json, "savepath"));
+    FILE *fp = fopen(savepath, "w");
     if (fp){
+        char *json2str = cJSON_Print(json);
         fwrite(json2str, strlen(json2str), 1, fp);
+        free(json2str);
+        fclose(fp);
     }else{
-        perror("open a file");
+        fprintf(stderr, "failed to open %s", savepath);
     }
-    free(json2str);
-    fclose(fp);
 }

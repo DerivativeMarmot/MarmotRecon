@@ -11,7 +11,7 @@ char move(mrMap *myMap, int *pos, char direction){
         }
     }
     else if (direction == 's'){
-        if (pos[0] == myMap->shape[0] - 1){
+        if (pos[0] == height - 1){
             return 'x';
         }else{
             ++pos[0];
@@ -37,7 +37,10 @@ char move(mrMap *myMap, int *pos, char direction){
     return myMap->map_clear[pos[0]][pos[1]];
 }
 
-
+void get_position(cJSON *json_position, int *pos){
+    pos[0] = cJSON_GetNumberValue(cJSON_GetArrayItem(json_position, 0));
+    pos[1] = cJSON_GetNumberValue(cJSON_GetArrayItem(json_position, 1));
+}
 
 /*cJSON *chara_load(mrChara *myChara){
     cJSON *json_CharaAttr = file2Json(CHARACTER_JSON);

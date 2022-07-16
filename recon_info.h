@@ -21,7 +21,7 @@
 
 typedef struct Map{
     char **map_clear; // reveal all position
-    bool **map_bool; // reveal only if the chara has ivisted
+    char **map_bool; // reveal only if the chara has ivisted
     int *shape;
 } mrMap;
 
