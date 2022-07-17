@@ -2,7 +2,6 @@
 
 // option == true means new game, otherwise load a save
 cJSON *saveSelector(bool option){
-    //char *savepath;
     // prompt usable saves
     bool save_status[MAX_SAVE];
     for (int i=0; i<MAX_SAVE; ++i){
@@ -18,7 +17,8 @@ cJSON *saveSelector(bool option){
         savepath[len] = '\0';
 
         // 0 on success, -1 on fail
-        if (access(savepath, R_OK) == 0){
+        // F_OK -> existence
+        if (access(savepath, F_OK) == 0){
             printf("    %d. save %d exists\n", i, i);
             save_status[i] = true;
         }else{
@@ -31,15 +31,20 @@ cJSON *saveSelector(bool option){
     // let user select a save
     char c = input_c("Select a save");
     if (c >= '0' && c < MAX_SAVE + 48){ // save0 ~ save9
+        
         int len = snprintf(NULL, 0, COMMON_PATH, c-48) + strlen(USER_JSON);
         char savepath[len+1];
         savepath[len] = '\0';
         sprintf(savepath, COMMON_PATH, c-48);
+        
         // new game
         if (option){
+            if (access("savedata/", F_OK) == -1)
+                mkdir("savedata/", S_IRWXU); // 700
             // overwrite exsiting game
             if (save_status[c - 48]){
-                char c = input_c("\033[0;33mThis is a existing save. Are you sure to overwrite it?\033[0m(y/n)"); // yellow
+                colored_printS("This is a existing save. Are you sure to overwrite it?(y/n)", 1);
+                char c = input_c("\0");
                 while (1){
                     if (c == 'Y' || c == 'y'){
                         puts("Save overwrited");
@@ -56,7 +61,10 @@ cJSON *saveSelector(bool option){
             mkdir(savepath, S_IRWXU); // 700
             strcat(savepath, USER_JSON);
             return userInit(savepath);
-        }else{
+        }
+        
+        // load game
+        else{
             strcat(savepath, USER_JSON);
             return userLoad(savepath);
         }
@@ -76,8 +84,8 @@ cJSON *userInit(char *savepath){
     char username[21];
     do{
         memset(username, 0, sizeof(username));
-        if (input_s(username, 20, "Username (Maximum of 20 characters)")){
-            printf("Please confirm your user name(y/n): %s\n", username);
+        if (input_s(username, 21, "Username (Maximum of 20 characters)")){
+            printf("Please confirm your username(y/n): %s\n", username);
             char c = input_c("\0");
             if (c == 'Y' || c == 'y'){
                 puts("Username confirmed.");
@@ -113,6 +121,7 @@ void save2file(cJSON *json){
         fwrite(json2str, strlen(json2str), 1, fp);
         free(json2str);
         fclose(fp);
+        colored_printS("Successfully save to file", 0);
     }else{
         fprintf(stderr, "failed to open %s", savepath);
     }

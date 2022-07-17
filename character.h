@@ -1,8 +1,11 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
-#include "recon_info.h"
+#include "inventory.h"
+#include "map.h"
 
 char move(mrMap *, int *, char );
-void get_position(cJSON *, int *);
+void position_load(cJSON *, int *);
+void position_write(cJSON *, int *);
+void interacts(cJSON *, mrMap *, mrChara *);
 
 #endif

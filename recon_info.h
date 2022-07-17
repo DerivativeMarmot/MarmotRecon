@@ -38,6 +38,4 @@ typedef struct marmot_recon{
     mrChara *myChara;
 } marmotRecon;
 
-
-
 #endif

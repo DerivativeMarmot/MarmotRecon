@@ -33,13 +33,52 @@ char move(mrMap *myMap, int *pos, char direction){
             ++pos[1];
         }
     }
-    myMap->map_bool[pos[0]][pos[1]] = true;
+    myMap->map_bool[pos[0]][pos[1]] = '1';
     return myMap->map_clear[pos[0]][pos[1]];
 }
 
-void get_position(cJSON *json_position, int *pos){
+void position_load(cJSON *json_position, int *pos){
     pos[0] = cJSON_GetNumberValue(cJSON_GetArrayItem(json_position, 0));
     pos[1] = cJSON_GetNumberValue(cJSON_GetArrayItem(json_position, 1));
+}
+
+void position_write(cJSON *json_position, int *pos){
+    cJSON_SetNumberHelper(cJSON_GetArrayItem(json_position, 0), pos[0]);
+    cJSON_SetNumberHelper(cJSON_GetArrayItem(json_position, 1), pos[1]);
+}
+
+void interacts(cJSON *json, mrMap *myMap, mrChara *myChara){
+    position_load(cJSON_GetObjectItem(json, "position"), myChara->position);
+    map_print(myMap, myChara->position);
+
+    for (int i=0; i<10; i++){
+        mrMapMenu();
+        char dir = input_c("\0");
+        if (dir == 'q')
+            break;
+        
+        switch ( move( myMap, myChara->position, dir ) )
+        {
+            case 'E':
+                puts("Enemy");
+                break;
+            case 'M':
+                puts("Mineral");
+                break;
+            case '*':
+                puts("None");
+                break;
+            case 'x':
+                colored_printS("You can not move in this direction anymore!", 2);
+                break;
+            default:
+                break;
+        }
+
+        map_print(myMap, myChara->position);
+        colored_printS("--------------------------", rand() % 6);
+    }
+    putchar(10);
 }
 
 /*cJSON *chara_load(mrChara *myChara){

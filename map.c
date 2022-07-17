@@ -5,52 +5,7 @@ int gen_ran_bet(int min, int max){
     return rand() % (max - min) + min;
 }
 
-/*void *map_init(int *shape, char **map_clear, char **map_bool){
-    int HEIGHT_MIN = 6;
-    int HEIGHT_MAX = 10;
-    int WIDTH_MIN = 16;
-    int WIDTH_MAX = 23;
-    int height = gen_ran_bet(HEIGHT_MIN, HEIGHT_MAX);
-
-    shape = (int*) malloc(sizeof(int) * (height + 1));
-    shape[0] = height;
-    map_clear = (char**) malloc (sizeof(char*) * height);
-    map_bool = (char**) malloc (sizeof(char*) * height);
-
-    for (int i=0; i<height; ++i){
-        int width = gen_ran_bet(WIDTH_MIN, WIDTH_MAX); // random width between 6 ~ 9
-        shape[i+1] = width;
-
-        map_clear[i] = (char*)malloc(sizeof(char) * (width + 1));
-        map_bool[i] = (char*)malloc(sizeof(char) * (width + 1));
-
-        // initialize all position to false (unvisited)
-        memset(map_bool[i], '0', sizeof(char) * (width + 1));
-        
-        for (int j = 0; j<width; ++j){
-            int r = rand() % 100;
-            if (r < 10){ // 10%
-                map_clear[i][j] = 'E'; // enemy
-            }
-            else if (r < 30){ // 20%
-                map_clear[i][j] = 'M'; // mineral
-            }
-            else{ // 70%
-                map_clear[i][j] = '*'; // null
-            }
-        }
-        map_clear[i][width] = '\0';
-        map_bool[i][width] = '\0';
-    }
-    //const char *const *cs_map_clear = map_clear;
-    //const char *const *cs_map_bool = map_bool;
-    
-
-    // free(map_clear);
-    // free(map_bool);
-}
-*/
-void map_init2(mrMap *myMap){
+void map_init(mrMap *myMap){
     int HEIGHT_MIN = 6;
     int HEIGHT_MAX = 10;
     int WIDTH_MIN = 16;
@@ -95,36 +50,14 @@ void map_init2(mrMap *myMap){
     }
 }
 
-void map_print(cJSON *json, int *pos){
-    cJSON *json_shape = cJSON_GetObjectItemCaseSensitive(json, "shape");
-    cJSON *json_clear = cJSON_GetObjectItemCaseSensitive(json, "clear");
-    cJSON *json_bool = cJSON_GetObjectItemCaseSensitive(json, "bool");
-    
-    int height = cJSON_GetNumberValue(cJSON_GetArrayItem(json_shape, 0));
-    for (int i=1; i<height; ++i){
-        for (int j = 0; j < cJSON_GetNumberValue(cJSON_GetArrayItem(json_shape, i)); ++j)
-        {
-            if (i == pos[0] && j == pos[1])
-                putchar('#');
-            else if ( cJSON_GetStringValue(cJSON_GetArrayItem(json_clear, i))[j] == '1')
-                putchar( cJSON_GetStringValue(cJSON_GetArrayItem(json_clear, i))[j] );
-            else
-                putchar('*');
-            putchar(' ');
-        }
-        putchar(10);
-    }
-}
-
-void map_print2(mrMap *myMap, int *pos)
+void map_print(mrMap *myMap, int *pos)
 {
     for (int i = 0; i < (myMap->shape[0]); ++i)
     {
         for (int j = 0; j < (myMap->shape[i + 1]); ++j)
         {
-            
             if (i == pos[0] && j == pos[1])
-                putchar('#');
+                colored_printC('#', 5);
             else if (myMap->map_bool[i][j] == '1')
                 putchar(myMap->map_clear[i][j]);
             else
@@ -197,22 +130,13 @@ void map_free(int *shape, char **map_clear, char **map_bool){
     free(shape);
 }
 
-/*mrMap_interacts(){
-    mrMap_menu();
-    char c = input("> ");
-    printf("%c\n", c);
-    if (move(myMR->myMap, myMR->myChara->position, c) == 'x'){
-        puts("You can not move in this direction anymore!");
-    }
-    mrMap_print(myMR->myMap, myMR->myChara->position);
-}*/
-
 void mrMapMenu(){
     puts("\n\
     w: go up\n\
     s: go down\n\
     a: go left\n\
     d: go right\
+    q: quit\n\
     ");
 }
 

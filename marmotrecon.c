@@ -1,25 +1,16 @@
-#include "map.h"
 #include "character.h"
-#include "inventory.h"
 #include "savemgr.h"
 
 int main(void){
     srand((unsigned)time(NULL));
 
     cJSON *json_main;
-    //cJSON *json_item = file2Json(ITEM_JSON);
-    //cJSON *json_recipe = file2Json(RECIPE_JSON);
+    
     marmotRecon *myMR = (marmotRecon*) malloc (sizeof(marmotRecon));
-    //marmotRecon *myMR;
-    //myMR = malloc (sizeof( *myMR));
     mrMap *myMap = myMR->myMap;
     mrChara *myChara = myMR->myChara;
     myMap = (mrMap*) malloc (sizeof(mrMap));
     myChara = (mrChara*) malloc (sizeof(mrChara));
-    //myMR->myMap = malloc (sizeof(*myMap));
-    //myMR->myChara = malloc (sizeof(*myChara));
-    // myMap = malloc (sizeof(*myMap));
-    // myChara = malloc (sizeof(*myChara));
 
     char c;
     while (1){
@@ -29,16 +20,16 @@ int main(void){
     3. Quit\n\
     ");
         c = input_c("\0");
-        if (c == '1'){
-            json_main = saveSelector(true); // new game
+        if (c == '1'){ // new game
+            json_main = saveSelector(true); // create json_main
             if (json_main == NULL)
                 continue;
-            map_init2(myMap);
-            cJSON_AddItemToObject(json_main, "Map", map_write(myMap));
+            map_init(myMap); // generate map
+            cJSON_AddItemToObject(json_main, "Map", map_write(myMap)); // add map to json_main
             break;
         }
-        else if (c == '2'){
-            json_main = saveSelector(false); // load game
+        else if (c == '2'){ // load game
+            json_main = saveSelector(false);
             if (json_main == NULL)
                 continue;
             //printf(cJSON_Print(json_main));
@@ -54,27 +45,12 @@ int main(void){
         }
     }
     
-    int pos[2];
-    get_position(cJSON_GetObjectItem(json_main, "position"), pos);
-    map_print2(myMap, pos);
+    interacts(json_main, myMap, myChara);
 
-    //cJSON *json_map = map_write(myMap);
-    //cJSON_AddItemToObject(json_main, "Map", json_map);
-    //printf(cJSON_Print(json_main));
+    cJSON_ReplaceItemInObjectCaseSensitive(json_main, "Map", map_write(myMap));
+    position_write(cJSON_GetObjectItem(json_main, "position"), myChara->position);
     save2file(json_main);
-    //cJSON_ReplaceItemInObjectCaseSensitive(json_main, "Map", NULL);
-    
-    /*int pos[2];
-    get_position(cJSON_GetObjectItem(json_chara, "position"), pos);
-    map_print(json_map, )
-    cJSON_AddItemToObject(json_chara, "Map", json_map);
 
-    //printf(cJSON_Print(json_chara));
-    save2file(json_chara);*/
-    
-
-    
-    
     //cJSON *json_user = file2Json(CHARACTER_JSON);
     //cJSON *json_item = file2Json(ITEM_JSON);
     //cJSON *json_recipe = file2Json(RECIPE_JSON);
@@ -86,33 +62,6 @@ int main(void){
     inv_addItem(json_inv, "iron", 22);
     inv_addItem(json_inv, "bronze", 12);
     inv_print(json_inv);*/
-
-
-
-    
-    
-    
-    // get_position(json_chara_pos, myChara->position);//
-    //myChara->position[0] = cJSON_GetArrayItem(cJSON_GetObjectItemCaseSensitive(json_chara, "position"), 0)->valueint;
-    //myChara->position[1] = cJSON_GetArrayItem(cJSON_GetObjectItemCaseSensitive(json_chara, "position"), 1)->valueint;
-    
-    
-    // map_print2(myMap, myChara->position);//
-    
-
-    /*for (int i=0; i<10; i++){
-        mrMapMenu();
-        char c = input_c("> ");
-        printf("%c\n", c);
-        if (move(myMap, myChara->position, c) == 'x'){
-            puts("You can not move in this direction anymore!");
-        }
-        mrMapPrint(myMap, myChara->position);
-    }
-    putchar(10);
-    mrMapPrint(myMap, myChara->position);*/
-
-    //save2file(json_chara);
 
     return 0;
 }
