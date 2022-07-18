@@ -7,10 +7,18 @@ int main(void){
     cJSON *json_main;
     
     marmotRecon *myMR = (marmotRecon*) malloc (sizeof(marmotRecon));
+
     mrMap *myMap = myMR->myMap;
     mrChara *myChara = myMR->myChara;
+    mrEnemy *myEnemy = myMR->myEnemy;
+
     myMap = (mrMap*) malloc (sizeof(mrMap));
+
     myChara = (mrChara*) malloc (sizeof(mrChara));
+    myChara->myAttr = (mrAttr*) malloc (sizeof(mrAttr));
+
+    myEnemy = (mrEnemy*) malloc (sizeof(mrEnemy));
+    myEnemy->myAttr = (mrAttr*) malloc (sizeof(mrAttr));
 
     char c;
     while (1){
@@ -44,9 +52,12 @@ int main(void){
             c = input_c("\0");
         }
     }
-    
-    interacts(json_main, myMap, myChara);
 
+    position_load(cJSON_GetObjectItem(json_main, "position"), myChara->position);
+    map_print(myMap, myChara->position);
+
+    interacts(myMap, myChara, myEnemy);
+    
     cJSON_ReplaceItemInObjectCaseSensitive(json_main, "Map", map_write(myMap));
     position_write(cJSON_GetObjectItem(json_main, "position"), myChara->position);
     save2file(json_main);

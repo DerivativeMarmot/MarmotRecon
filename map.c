@@ -1,16 +1,11 @@
 #include "map.h"
-//#include "util.h"
-
-int gen_ran_bet(int min, int max){
-    return rand() % (max - min) + min;
-}
 
 void map_init(mrMap *myMap){
     int HEIGHT_MIN = 6;
     int HEIGHT_MAX = 10;
     int WIDTH_MIN = 16;
     int WIDTH_MAX = 23;
-    int height = gen_ran_bet(HEIGHT_MIN, HEIGHT_MAX);
+    int height = gen_randomInt(HEIGHT_MIN, HEIGHT_MAX);
     //printf("%d\n", height);
 
     myMap->shape = (int *) malloc (sizeof(int) * (height + 1));
@@ -22,7 +17,7 @@ void map_init(mrMap *myMap){
     //printf(" %d\n", height);
 
     for (int i=0; i<height; ++i){
-        int width = gen_ran_bet(WIDTH_MIN, WIDTH_MAX); // random width between 6 ~ 9
+        int width = gen_randomInt(WIDTH_MIN, WIDTH_MAX); // random width between 6 ~ 9
         // the length of current row
         myMap->shape[i+1] = width;
         
@@ -130,7 +125,7 @@ void map_free(int *shape, char **map_clear, char **map_bool){
     free(shape);
 }
 
-void mrMapMenu(){
+void map_menu(){
     puts("\n\
     w: go up\n\
     s: go down\n\

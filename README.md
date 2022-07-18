@@ -11,3 +11,5 @@ map: struct <=> json
 
 TODO:
 chara interacts with a given position
+E:
+M:

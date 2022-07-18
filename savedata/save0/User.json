@@ -4,6 +4,10 @@
 	"position":	[4, 18],
 	"Inventory":	{
 	},
+	"Attribute":{
+		"attack": 12.1,
+		""
+	},
 	"Map":	{
 		"shape":	[8, 21, 22, 20, 20, 19, 20, 18, 21],
 		"clear":	["*M******EMME**MM*M**E", "**MMEEM*M*EME*********", "***MMM*M****E*M*M*M*", "M*****M****M***E*MM*", "*E***ME*********EM*", "**E****E**M**MM*E*E*", "*********EM**EMM*M", "**M*EM*E*****E**MM***"],

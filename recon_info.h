@@ -19,23 +19,33 @@
 #define COMMON_PATH "savedata/save%d/"
 
 
-typedef struct Map{
+typedef struct{
     char **map_clear; // reveal all position
     char **map_bool; // reveal only if the chara has ivisted
     int *shape;
 } mrMap;
 
-typedef struct chara{
+typedef struct{
+    char name[30];
+    double health;
+    double atk;
+    double crit;
+    double crit_dmg;
+} mrAttr;
+
+typedef struct{
     int position[2];
-    /*struct attr{
-        double atk;
-        double cri; // critical strike
-    };*/
+    mrAttr *myAttr;
 } mrChara;
 
-typedef struct marmot_recon{
+typedef struct{
+    mrAttr *myAttr;
+} mrEnemy;
+
+typedef struct{
     mrMap *myMap;
     mrChara *myChara;
+    mrEnemy *myEnemy;
 } marmotRecon;
 
 #endif

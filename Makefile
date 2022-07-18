@@ -1,5 +1,5 @@
 EXE=marmotrecon.mrexe
-OBJ=marmotrecon.o cJSON.o util.o map.o character.o inventory.o savemgr.o
+OBJ=marmotrecon.o cJSON.o util.o map.o character.o inventory.o savemgr.o skills.o
 
 all: $(EXE)
 
@@ -20,6 +20,9 @@ inventory.o: inventory.c
 
 map.o: map.c
 	gcc -c map.c
+
+skills.o: skills.c
+	gcc -c skills.c
 
 cJSON.o: cJSON/cJSON.c
 	gcc -c cJSON/cJSON.c

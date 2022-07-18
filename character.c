@@ -47,12 +47,9 @@ void position_write(cJSON *json_position, int *pos){
     cJSON_SetNumberHelper(cJSON_GetArrayItem(json_position, 1), pos[1]);
 }
 
-void interacts(cJSON *json, mrMap *myMap, mrChara *myChara){
-    position_load(cJSON_GetObjectItem(json, "position"), myChara->position);
-    map_print(myMap, myChara->position);
-
+void interacts(mrMap *myMap, mrChara *myChara, mrEnemy *myEnemy){
     for (int i=0; i<10; i++){
-        mrMapMenu();
+        map_menu();
         char dir = input_c("\0");
         if (dir == 'q')
             break;
@@ -61,6 +58,7 @@ void interacts(cJSON *json, mrMap *myMap, mrChara *myChara){
         {
             case 'E':
                 puts("Enemy");
+                interacts_E(myChara, myEnemy);
                 break;
             case 'M':
                 puts("Mineral");
@@ -74,12 +72,50 @@ void interacts(cJSON *json, mrMap *myMap, mrChara *myChara){
             default:
                 break;
         }
-
+        
         map_print(myMap, myChara->position);
-        colored_printS("--------------------------", rand() % 6);
+        colored_printS("--------------------------\n", rand() % 6);
     }
-    putchar(10);
 }
+
+void interacts_E(mrChara *myChara, mrEnemy *myEnemy){
+    skill_menu();
+    bool turn = true; // 1 chara turn, 0 enemy turn.
+    double receiver_hp;
+    for (int i=0; i<5; ++i){
+        char skill;
+        if (turn){
+            skill = input_c("Your turn!");
+        }
+        else{
+            puts("Enemy turn!");
+            //skill = rand() % '2' +'1';
+            skill = '1';
+        }
+        
+        switch (skill)
+        {
+        case '1':
+            receiver_hp = skill_attack(myChara->myAttr, myEnemy->myAttr, turn);
+            break;
+        
+        default:
+            continue;
+        }
+
+        if (receiver_hp <= 0){
+            if (turn){
+                colored_printS("You win!\n", 0);
+            }else{
+                colored_printS("You lose.\n", 2);
+            }
+            break;
+        }
+
+        turn = !turn;
+    }
+}
+void interacts_M(){}
 
 /*cJSON *chara_load(mrChara *myChara){
     cJSON *json_CharaAttr = file2Json(CHARACTER_JSON);

@@ -119,6 +119,15 @@ void colored_printS(char *prompt, int color){
     }    
 }
 
+int gen_randomInt(int min, int max){
+    return rand() % (max - min) + min;
+}
+
+double gen_randomDouble(double min, double max){
+    if (min + 0.01 >= max)
+        return min;
+    return rand() % (int)((max- min) * 100 ) / 100.0 + min;
+}
 
 //void colored_print()
 
