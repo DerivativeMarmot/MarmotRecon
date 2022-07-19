@@ -10,13 +10,17 @@
 #include <unistd.h> // access()
 
 #include "cJSON/cJSON.h"
-#include "util.h"
 
 #define USER_JSON "User.json"
 #define ITEM_JSON "Item.json"
 #define RECIPE_JSON "RecipeBook.json"
 #define MAX_SAVE 3
 #define COMMON_PATH "savedata/save%d/"
+#define COLOR_GREEN "\033[;32m"
+#define COLOR_RED "\033[;31m"
+#define COLOR_YELLOW "\033[;33m"
+#define COLOR_CYAN "\033[;36m"
+#define COLOR_RESET "\033[0m"
 
 
 typedef struct{
@@ -26,7 +30,8 @@ typedef struct{
 } mrMap;
 
 typedef struct{
-    char name[30];
+    int level;
+    int exp;
     double health;
     double atk;
     double crit;
@@ -34,11 +39,13 @@ typedef struct{
 } mrAttr;
 
 typedef struct{
+    char name[21];
     int position[2];
     mrAttr *myAttr;
 } mrChara;
 
 typedef struct{
+    char name[21];
     mrAttr *myAttr;
 } mrEnemy;
 

@@ -61,9 +61,10 @@ void map_print(mrMap *myMap, int *pos)
         }
         putchar(10);
     }
+    colored_printS("--------------------------\n", rand() % 6);
 }
 
-cJSON *map_write(mrMap *myMap){
+cJSON *map_write( mrMap *myMap){
     cJSON *map_json = cJSON_CreateObject();
     cJSON_AddItemToObject(map_json, "shape", cJSON_CreateIntArray(myMap->shape, myMap->shape[0] + 1));
     cJSON_AddItemToObject(map_json, "clear", cJSON_CreateStringArray(myMap->map_clear, myMap->shape[0]));

@@ -5,9 +5,9 @@
 #include "skills.h"
 
 char move(mrMap *, int *, char );
-void position_load(cJSON *, int *);
-void position_write(cJSON *, int *);
-void interacts(mrMap *, mrChara *, mrEnemy *);
+void chara_load(cJSON *, mrChara *);
+void chara_write(cJSON *, mrChara *);
+//void interacts(mrMap *, mrChara *, mrEnemy *);
 void interacts_E(mrChara *, mrEnemy *);
 
 #endif

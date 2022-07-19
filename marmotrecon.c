@@ -19,6 +19,7 @@ int main(void){
 
     myEnemy = (mrEnemy*) malloc (sizeof(mrEnemy));
     myEnemy->myAttr = (mrAttr*) malloc (sizeof(mrAttr));
+/***********************************************/
 
     char c;
     while (1){
@@ -29,18 +30,18 @@ int main(void){
     ");
         c = input_c("\0");
         if (c == '1'){ // new game
-            json_main = saveSelector(true); // create json_main
+            json_main = saveSelector(true);
             if (json_main == NULL)
                 continue;
             map_init(myMap); // generate map
             cJSON_AddItemToObject(json_main, "Map", map_write(myMap)); // add map to json_main
+            save2file(json_main);
             break;
         }
         else if (c == '2'){ // load game
             json_main = saveSelector(false);
             if (json_main == NULL)
                 continue;
-            //printf(cJSON_Print(json_main));
             map_load(myMap, cJSON_GetObjectItem(json_main, "Map"));
             break;
         }
@@ -52,27 +53,42 @@ int main(void){
             c = input_c("\0");
         }
     }
-
-    position_load(cJSON_GetObjectItem(json_main, "position"), myChara->position);
-    map_print(myMap, myChara->position);
-
-    interacts(myMap, myChara, myEnemy);
-    
-    cJSON_ReplaceItemInObjectCaseSensitive(json_main, "Map", map_write(myMap));
-    position_write(cJSON_GetObjectItem(json_main, "position"), myChara->position);
-    save2file(json_main);
-
-    //cJSON *json_user = file2Json(CHARACTER_JSON);
-    //cJSON *json_item = file2Json(ITEM_JSON);
-    //cJSON *json_recipe = file2Json(RECIPE_JSON);
-    //inv_print(cJSON_GetObjectItemCaseSensitive(json_CharaAttr, "Inventory"));
-    // cJSON *json_chara_pos = cJSON_GetObjectItemCaseSensitive(json_main, "position");//
-    /*cJSON *json_inv = cJSON_GetObjectItemCaseSensitive(json_chara, "Inventory");
-    inv_print(json_inv);
     putchar(10);
-    inv_addItem(json_inv, "iron", 22);
-    inv_addItem(json_inv, "bronze", 12);
-    inv_print(json_inv);*/
+/***********************************************/
+    
+    printf("Welcome back %s\n", myChara->name);
+    chara_load(json_main, myChara); // name, pos, attr
+    map_print(myMap, myChara->position);
+    for (int i=0; i<10; i++){
+        map_menu();
+        char dir = input_c("\0");
+        if (dir == 'q')
+            break;
+        
+        switch ( move( myMap, myChara->position, dir ) )
+        {
+            case 'E':
+                puts("Enemy");
+                interacts_E(myChara, myEnemy);
+                break;
+            case 'M':
+                puts("Mineral");
+                break;
+            case '*':
+                puts("None");
+                break;
+            case 'x':
+                colored_printS("You can not move in this direction anymore!\n", 2);
+                break;
+            default:
+                break;
+        }
+        
+        map_print(myMap, myChara->position);
+    }
+    cJSON_ReplaceItemInObjectCaseSensitive(json_main, "Map", map_write(myMap));
+    chara_write(json_main, myChara);
+    save2file(json_main);
 
     return 0;
 }

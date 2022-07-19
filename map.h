@@ -1,6 +1,6 @@
 #ifndef MAP_H
 #define MAP_H
-#include "recon_info.h"
+#include "util.h"
 
 void map_init(mrMap *);
 void map_print(mrMap *, int *);

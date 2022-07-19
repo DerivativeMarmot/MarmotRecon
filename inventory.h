@@ -1,6 +1,6 @@
 #ifndef INVENTORY_H
 #define INVENTORY_H
-#include "recon_info.h"
+#include "util.h"
 
 void inv_print(cJSON *);
 void inv_addItem(cJSON *, char* , int );

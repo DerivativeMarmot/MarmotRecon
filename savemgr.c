@@ -52,7 +52,7 @@ cJSON *saveSelector(bool option){
                     }
                     else if (c == 'N' || c == 'n'){
                         puts("Operation cancelled.");
-                        break;
+                        return NULL;
                     }
                     else
                         c = input_c("\0");
@@ -107,11 +107,12 @@ cJSON *userInit(char *savepath){
     cJSON_AddItemToObject(user_json, "Inventory", cJSON_CreateObject());
 
     // create attribute
-    cJSON *json_attr  = cJSON_AddItemToObject(user_json, "Attribute", cJSON_CreateObject());
-    cJSON_AddNumberToObject(json_attr, "health", gen_randomDouble(20, 25));
-    cJSON_AddNumberToObject(json_attr, "attack", gen_randomDouble(5, 8));
+    cJSON *json_attr  = cJSON_CreateObject();
+    cJSON_AddNumberToObject(json_attr, "health", gen_randomInt(20, 25));
+    cJSON_AddNumberToObject(json_attr, "atk", gen_randomInt(5, 8));
     cJSON_AddNumberToObject(json_attr, "crit", gen_randomDouble(5, 10));
     cJSON_AddNumberToObject(json_attr, "crit_dmg", 1.5);
+    cJSON_AddItemToObject(user_json, "Attribute", json_attr);
 
     return user_json;
 }
