@@ -1,13 +1,28 @@
 {
+    "cooper_coin":{
+        "type": ["material", "currency"]
+    },
+    "silver_coin":{
+        "type": ["material", "currency"]
+    },
+    "gold_coin":{
+        "type": ["material", "currency"]
+    },
+    "Platinum_coin":{
+        "type": ["material", "currency"]
+    },
     "bronze": {
         "type": "material"
+    },
+    "bronze_sword": {
+        "type": "weapon",
+        "damage": 3
     },
     "gold": {
         "type": "material"
     },
-    "stone_sword":{
+    "gold_sword":{
         "type": "weapon",
-        "damage": 3
+        "damage": 6
     }
-
 }

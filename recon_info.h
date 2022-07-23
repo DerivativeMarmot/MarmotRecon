@@ -32,27 +32,35 @@ typedef struct{
 typedef struct{
     int level;
     int exp;
+    double max_health;
     double health;
     double atk;
     double crit;
     double crit_dmg;
+    bool duck;
+    bool heal;
 } mrAttr;
 
 typedef struct{
     char name[21];
     int position[2];
     mrAttr *myAttr;
-} mrChara;
+} mrEntity;
 
-typedef struct{
+/*typedef struct{
     char name[21];
     mrAttr *myAttr;
-} mrEnemy;
+} mrEntity;*/
 
+/*typedef struct{
+    mrMap *myMap;
+    mrEntity *myChara;
+    mrEntity *myEnemy;
+} marmotRecon;*/
 typedef struct{
     mrMap *myMap;
-    mrChara *myChara;
-    mrEnemy *myEnemy;
+    mrEntity *myChara;
+    mrEntity *myEnemy;
 } marmotRecon;
 
 #endif

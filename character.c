@@ -37,7 +37,7 @@ char move(mrMap *myMap, int *pos, char direction){
     return myMap->map_clear[pos[0]][pos[1]];
 }
 
-void chara_load(cJSON *json_chara, mrChara *myChara){
+void chara_load(cJSON *json_chara, mrEntity *myChara){
     cJSON *json_position = cJSON_GetObjectItem(json_chara, "position");
     myChara->position[0] = cJSON_GetNumberValue(cJSON_GetArrayItem(json_position, 0));
     myChara->position[1] = cJSON_GetNumberValue(cJSON_GetArrayItem(json_position, 1));
@@ -46,13 +46,16 @@ void chara_load(cJSON *json_chara, mrChara *myChara){
 
     mrAttr *myAttr = myChara->myAttr;
     cJSON *json_attr = cJSON_GetObjectItem(json_chara, "Attribute");
+    myAttr->max_health = cJSON_GetNumberValue(cJSON_GetObjectItem(json_attr, "max_health"));
     myAttr->health = cJSON_GetNumberValue(cJSON_GetObjectItem(json_attr, "health"));
     myAttr->atk = cJSON_GetNumberValue(cJSON_GetObjectItem(json_attr, "atk"));
     myAttr->crit = cJSON_GetNumberValue(cJSON_GetObjectItem(json_attr, "crit"));
     myAttr->crit_dmg = cJSON_GetNumberValue(cJSON_GetObjectItem(json_attr, "crit_dmg"));
+    myAttr->duck = false;
+    myAttr->heal = true;
 }
 
-void chara_write(cJSON *json_chara, mrChara *myChara){
+void chara_write(cJSON *json_chara, mrEntity *myChara){
     // replace pos
     cJSON *json_position = cJSON_CreateIntArray(myChara->position, 2);
     cJSON_ReplaceItemInObjectCaseSensitive(json_chara, "position", json_position);
@@ -67,32 +70,57 @@ void chara_write(cJSON *json_chara, mrChara *myChara){
     cJSON_ReplaceItemInObjectCaseSensitive(json_chara, "Attribute", json_attr);
 }
 
-/*void interacts(mrMap *myMap, mrChara *myChara, mrEnemy *myEnemy){
+/*void interacts(mrMap *myMap, mrEntity *myChara, mrEntity *myEnemy){
     ;
 }*/
 
-void interacts_E(mrChara *myChara, mrEnemy *myEnemy){
+void interacts_E(mrEntity *myChara, mrEntity *myEnemy, cJSON *json_inv){
     enemy_init(myEnemy);
     bool turn = true; // 1 chara turn, 0 enemy turn.
     double receiver_hp;
     char skill;
+    mrEntity *active, *passive;
+    int round = 1;
     while (1){
         if (turn){
-            colored_printS("--------------------------\n", rand() % 6);
+            printf("%s-------------round %d-------------\n%s",COLOR_RED, round++, COLOR_RESET);
+            //colored_printS("--------------------------\n", rand() % 6);
             skill_menu();
             skill = input_c("Your turn!");
+            active = myChara;
+            passive = myEnemy;
         }
         else{
             puts("Enemy turn!");
-            skill = gen_randomInt(1, 2) + 48;
+            skill = gen_randomInt(1, 6) + 48;
+            active = myEnemy;
+            passive = myChara;
         }
         
         switch (skill)
         {
         case '1':
-            receiver_hp = skill_attack(myChara, myEnemy, turn);
+            receiver_hp = skill_attack(active, passive);
             break;
-        
+        case '2':
+            skill_duck(active);
+            break;
+        case '3':
+            skill_powerUp(active);
+            break;
+        case '4':
+            skill_powerDown(active);
+            break;
+        case '5':{
+            if (active->myAttr->heal)
+                skill_heal(active);
+            else{
+                colored_printS("You can't heal yourself anymore, running out of heal times\n", 2);
+                continue;
+            }
+            break;
+        }
+            
         default:
             continue;
         }
@@ -100,6 +128,7 @@ void interacts_E(mrChara *myChara, mrEnemy *myEnemy){
         if (receiver_hp <= 0){
             if (turn){
                 colored_printS("You win!\n", 0);
+                battle_reward(json_inv);
             }else{
                 colored_printS("You lose.\n", 2);
             }
@@ -107,12 +136,13 @@ void interacts_E(mrChara *myChara, mrEnemy *myEnemy){
         }
 
         turn = !turn;
+        colored_printS("TURN CHANGE\n", 1);
         putchar(10);
     }
 }
 void interacts_M(){}
 
-/*cJSON *chara_load(mrChara *myChara){
+/*cJSON *chara_load(mrEntity *myChara){
     cJSON *json_CharaAttr = file2Json(CHARACTER_JSON);
 }
 void chara_write(){;}*/

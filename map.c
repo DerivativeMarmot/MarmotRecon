@@ -28,7 +28,13 @@ void map_init(mrMap *myMap){
         memset(myMap->map_bool[i], '0', sizeof(char) * width);
 
         // initialize each position
+        char target[] = {'E','M','*'};
+        int weight[] = {10, 20, 70}; // 100 in total
+        int count = 3;
         for (int j = 0; j<width; ++j){
+            myMap->map_clear[i][j] = weighted_randC(target, weight, count);
+        }
+        /*for (int j = 0; j<width; ++j){
             int r = rand() % 100;
             if (r < 10){ // 10%
                 myMap->map_clear[i][j] = 'E'; // enemy
@@ -39,7 +45,7 @@ void map_init(mrMap *myMap){
             else{ // 70%
                 myMap->map_clear[i][j] = '*'; // null
             }
-        }
+        }*/
         myMap->map_clear[i][width] = '\0';
         myMap->map_bool[i][width] = '\0';
     }
@@ -139,7 +145,7 @@ void map_menu(){
 /*int main(void){
     marmotRecon *myMR;
     myMR->myMap = (mrMap*) malloc (sizeof(mrMap));
-    myMR->myChara = (mrChara*) malloc (sizeof(mrChara));
+    myMR->myChara = (mrEntity*) malloc (sizeof(mrEntity));
     srand((unsigned)time(NULL));
     
     mrMap_gen_raw(myMR->myMap);

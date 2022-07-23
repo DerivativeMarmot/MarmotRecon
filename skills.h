@@ -3,17 +3,19 @@
 #include "util.h"
 
 void skill_menu();
-void enemy_init(mrEnemy *);
 
 // dir == 1 c attacks e, otherwise e attcks c
 // returns the health value of who is attacked;
-double skill_attack(mrChara *, mrEnemy *, bool );
+double skill_attack(mrEntity *, mrEntity *);
 
-// Do not receive next damage from enemy
-void skill_duck();
-void skill_powerUp();
-void skill_powerDown();
+// Avoid receiving next damage from enemy
+void skill_duck(mrEntity *);
+
+void skill_powerUp(mrEntity *);
+void skill_powerDown(mrEntity *);
 void skill_armor();
-void skill_heal();
+
+// can only be used once in one battle
+void skill_heal(mrEntity *);
 
 #endif

@@ -9,5 +9,6 @@ void colored_printC(char , int);
 void colored_printS(char *, int);
 int gen_randomInt(int , int );
 double gen_randomDouble(double , double );
+char weighted_randC(char *, int *, int );
 
 #endif

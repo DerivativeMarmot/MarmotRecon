@@ -9,15 +9,15 @@ int main(void){
     marmotRecon *myMR = (marmotRecon*) malloc (sizeof(marmotRecon));
 
     mrMap *myMap = myMR->myMap;
-    mrChara *myChara = myMR->myChara;
-    mrEnemy *myEnemy = myMR->myEnemy;
+    mrEntity *myChara = myMR->myChara;
+    mrEntity *myEnemy = myMR->myEnemy;
 
     myMap = (mrMap*) malloc (sizeof(mrMap));
 
-    myChara = (mrChara*) malloc (sizeof(mrChara));
+    myChara = (mrEntity*) malloc (sizeof(mrEntity));
     myChara->myAttr = (mrAttr*) malloc (sizeof(mrAttr));
 
-    myEnemy = (mrEnemy*) malloc (sizeof(mrEnemy));
+    myEnemy = (mrEntity*) malloc (sizeof(mrEntity));
     myEnemy->myAttr = (mrAttr*) malloc (sizeof(mrAttr));
 /***********************************************/
 
@@ -56,10 +56,12 @@ int main(void){
     putchar(10);
 /***********************************************/
     
+    cJSON *json_inv = cJSON_GetObjectItem(json_main, "Inventory");
+    
     printf("Welcome back %s\n", myChara->name);
     chara_load(json_main, myChara); // name, pos, attr
     map_print(myMap, myChara->position);
-    for (int i=0; i<10; i++){
+    while (1){
         map_menu();
         char dir = input_c("\0");
         if (dir == 'q')
@@ -68,8 +70,8 @@ int main(void){
         switch ( move( myMap, myChara->position, dir ) )
         {
             case 'E':
-                puts("Enemy");
-                interacts_E(myChara, myEnemy);
+                colored_printS("Enemy found, get into fight!\n", 1);
+                interacts_E(myChara, myEnemy, json_inv);
                 break;
             case 'M':
                 puts("Mineral");

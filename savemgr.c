@@ -19,10 +19,10 @@ cJSON *saveSelector(bool option){
         // 0 on success, -1 on fail
         // F_OK -> existence
         if (access(savepath, F_OK) == 0){
-            printf("    %d. save %d exists\n", i, i);
+            printf("    %s%d. save %d exists\n%s",COLOR_GREEN ,i, i, COLOR_RESET);
             save_status[i] = true;
         }else{
-            printf("    %d. save %d is empty\n", i, i);
+            printf("    %s%d. save %d is empty\n%s", COLOR_RED, i, i, COLOR_RESET);
             save_status[i] = false;
         }
     }
@@ -108,7 +108,9 @@ cJSON *userInit(char *savepath){
 
     // create attribute
     cJSON *json_attr  = cJSON_CreateObject();
-    cJSON_AddNumberToObject(json_attr, "health", gen_randomInt(20, 25));
+    double max_health = gen_randomInt(20, 25);
+    cJSON_AddNumberToObject(json_attr, "max_health", max_health);
+    cJSON_AddNumberToObject(json_attr, "health", max_health);
     cJSON_AddNumberToObject(json_attr, "atk", gen_randomInt(5, 8));
     cJSON_AddNumberToObject(json_attr, "crit", gen_randomDouble(5, 10));
     cJSON_AddNumberToObject(json_attr, "crit_dmg", 1.5);

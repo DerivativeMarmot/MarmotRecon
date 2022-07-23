@@ -129,6 +129,18 @@ double gen_randomDouble(double min, double max){
     return rand() % (int)((max- min) * 100 ) / 100.0 + min;
 }
 
+char weighted_randC(char *target, int *weight, int count){
+    int r = rand() % 101;
+    int wR = 0;
+    for (int i = 0; i<count; ++i){
+        wR += weight[i];
+        if (wR >= r){
+            return target[i];
+        }
+    }
+    return '0';
+}
+
 //void colored_print()
 
 
