@@ -70,7 +70,7 @@ int main(void){
         switch ( move( myMap, myChara->position, dir ) )
         {
             case 'E':
-                colored_printS("Enemy found, get into fight!\n", 1);
+                colored_printS("Enemy found, get into fight!\n", 33, 0);
                 interacts_E(myChara, myEnemy, json_inv);
                 break;
             case 'M':
@@ -80,7 +80,7 @@ int main(void){
                 puts("None");
                 break;
             case 'x':
-                colored_printS("You can not move in this direction anymore!\n", 2);
+                colored_printS("You can not move in this direction anymore!\n", 31, 0);
                 break;
             default:
                 break;

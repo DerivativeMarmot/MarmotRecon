@@ -12,17 +12,17 @@
         "type": ["material", "currency"]
     },
     "bronze": {
-        "type": "material"
+        "type": ["material", "Mineral"]
     },
     "bronze_sword": {
-        "type": "weapon",
+        "type": ["weapon"],
         "damage": 3
     },
     "gold": {
-        "type": "material"
+        "type": ["material", "Mineral"]
     },
     "gold_sword":{
-        "type": "weapon",
+        "type": ["weapon"],
         "damage": 6
     }
 }

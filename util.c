@@ -61,62 +61,18 @@ char *input_s(char *st, int n, char* prompt)
     return ret_val;
 }
 
-// 0:green, 1: yellow, 2: red
-// 3: blue, 4: Magenta, 5: Cyan
-void colored_printC(char prompt, int color){
-    switch (color)
-    {
-    case 0:
-        printf("\033[;32m%c\033[0m", prompt);
-        break;
-    case 1:
-        printf("\033[;33m%c\033[0m", prompt);
-        break;
-    case 2:
-        printf("\033[;31m%c\033[0m", prompt);
-        break;
-    case 3:
-        printf("\033[;34m%c\033[0m", prompt);
-        break;
-    case 4:
-        printf("\033[;35m%c\033[0m", prompt);
-        break;
-    case 5:
-        printf("\033[;36m%c\033[0m", prompt);
-        break;
-    default:
-        putchar(prompt);
-        break;
-    }    
+void colored_printC(char prompt, int color, int option){
+    if (color >= 31 && color <= 36 || color >= 41 && color <= 46)
+        printf("\033[%d;%dm%c\033[0m", option, color, prompt);
+    else
+        puts(prompt);
 }
 
-// 0:green, 1: yellow, 2: red
-// 3: blue, 4: Magenta, 5: Cyan
-void colored_printS(char *prompt, int color){
-    switch (color)
-    {
-    case 0:
-        printf("\033[;32m%s\033[0m", prompt);
-        break;
-    case 1:
-        printf("\033[;33m%s\033[0m", prompt);
-        break;
-    case 2:
-        printf("\033[;31m%s\033[0m", prompt);
-        break;
-    case 3:
-        printf("\033[;34m%s\033[0m", prompt);
-        break;
-    case 4:
-        printf("\033[;35m%s\033[0m", prompt);
-        break;
-    case 5:
-        printf("\033[;36m%s\033[0m", prompt);
-        break;
-    default:
+void colored_printS(char *prompt, int color, int option){
+    if (color >= 31 && color <= 36 || color >= 41 && color <= 46)
+        printf("\033[%d;%dm%s\033[0m", option, color, prompt);
+    else
         puts(prompt);
-        break;
-    }    
 }
 
 int gen_randomInt(int min, int max){
@@ -129,16 +85,28 @@ double gen_randomDouble(double min, double max){
     return rand() % (int)((max- min) * 100 ) / 100.0 + min;
 }
 
-char weighted_randC(char *target, int *weight, int count){
+char weighted_randC(char *sample, int *weight, int count){
     int r = rand() % 101;
     int wR = 0;
     for (int i = 0; i<count; ++i){
         wR += weight[i];
         if (wR >= r){
-            return target[i];
+            return sample[i];
         }
     }
     return '0';
+}
+
+int weighted_randA(int *weight, int count){
+    int r = rand() % 101;
+    printf("r= %d\n", r);
+    int wR = 0;
+    for (int i = 0; i<count; ++i){
+        wR += weight[i];
+        if (wR >= r){
+            return i;
+        }
+    }
 }
 
 //void colored_print()

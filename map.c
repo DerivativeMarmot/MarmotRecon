@@ -58,16 +58,16 @@ void map_print(mrMap *myMap, int *pos)
         for (int j = 0; j < (myMap->shape[i + 1]); ++j)
         {
             if (i == pos[0] && j == pos[1])
-                colored_printC('#', 5);
+                colored_printC('#', 36, 0);
             else if (myMap->map_bool[i][j] == '1')
-                putchar(myMap->map_clear[i][j]);
+                colored_printC(myMap->map_clear[i][j], 42, 0);
             else
                 putchar('*');
             putchar(' ');
         }
         putchar(10);
     }
-    colored_printS("--------------------------\n", rand() % 6);
+    colored_printS("--------------------------\n", rand() % 6 + 31, 0);
 }
 
 cJSON *map_write( mrMap *myMap){

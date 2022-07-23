@@ -8,35 +8,34 @@ double randomDouble(double min, double max){
     return rand() % (int)((max- min) * 100 ) / 100.0 + min;
 }
 
-void colored_printS(char *prompt, int color){
-    switch (color)
-    {
-    case 0:
-        printf("\033[;32m%s\033[0m", prompt);
-        break;
-    case 1:
-        printf("\033[;33m%s\033[0m", prompt);
-        break;
-    case 2:
-        printf("\033[;31m%s\033[0m", prompt);
-        break;
-    case 3:
-        printf("\033[;34m%s\033[0m", prompt);
-        break;
-    case 4:
-        printf("\033[;35m%s\033[0m", prompt);
-        break;
-    case 5:
-        printf("\033[;36m%s\033[0m", prompt);
-        break;
-    default:
+void colored_printS(char *prompt, int color, int option){
+    if (color >= 31 && color <= 36 || color >= 41 && color <= 46)
+        printf("\033[%d;%dm%s\033[0m", option, color, prompt);
+    else
         puts(prompt);
-        break;
-    }    
+}
+
+int weighted_randA(int *weight, int count){
+    int r = rand() % 101;
+    printf("r= %d\n", r);
+    int wR = 0;
+    for (int i = 0; i<count; ++i){
+        wR += weight[i];
+        if (wR >= r){
+            return i;
+        }
+    }
 }
 
 int main()
 {
-    
-    return 0;
+    srand((unsigned)time(NULL));
+    //colored_printS("hello\n", 31, 10);
+    //printf("hello\n");  
+    int count = 3;
+    char *sample[] = {"bronze", "iron", "gold"};
+    int weight[] = {50, 40, 10};
+    int index = weighted_randA(weight, count);
+    puts(sample[index]);
+    return 0;   
 }

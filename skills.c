@@ -14,7 +14,7 @@ double skill_attack(mrEntity *active, mrEntity *passive){
     printf("%s%s is attacking %s%s\n", COLOR_RED, active->name, passive->name, COLOR_RESET);
     if (passive->myAttr->duck)
     {
-        colored_printS("Miss!\n", 1);
+        colored_printS("Miss!\n", 33, 0);
         passive->myAttr->duck = !(passive->myAttr->duck);
         printf("%s%s duck point -1%s\n", COLOR_CYAN, passive->name, COLOR_RESET);
     }

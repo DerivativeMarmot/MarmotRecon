@@ -7,12 +7,7 @@ cJSON *saveSelector(bool option){
     for (int i=0; i<MAX_SAVE; ++i){
         // allocate string of savepath
         int len = snprintf(NULL, 0, COMMON_PATH, i) + strlen(USER_JSON);
-        //savepath = malloc (sizeof(char) * (len+1));
         char savepath[len+1];
-        if (!savepath){
-            fprintf(stderr, "\033[;31mmalloc: failed to allocate mem\033[0m");
-            exit(EXIT_FAILURE);
-        }
         sprintf(savepath, COMMON_PATH, i);
         savepath[len] = '\0';
 
@@ -43,7 +38,7 @@ cJSON *saveSelector(bool option){
                 mkdir("savedata/", S_IRWXU); // 700
             // overwrite exsiting game
             if (save_status[c - 48]){
-                colored_printS("This is a existing save. Are you sure to overwrite it?(y/n)", 1);
+                colored_printS("This is a existing save. Are you sure to overwrite it?(y/n)", 33, 0);
                 char c = input_c("\0");
                 while (1){
                     if (c == 'Y' || c == 'y'){
@@ -131,7 +126,7 @@ void save2file(cJSON *json){
         fwrite(json2str, strlen(json2str), 1, fp);
         free(json2str);
         fclose(fp);
-        colored_printS("Successfully save to file", 0);
+        colored_printS("Successfully save to file", 32, 0);
     }else{
         fprintf(stderr, "failed to open %s", savepath);
     }

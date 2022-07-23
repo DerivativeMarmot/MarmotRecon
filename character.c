@@ -84,7 +84,6 @@ void interacts_E(mrEntity *myChara, mrEntity *myEnemy, cJSON *json_inv){
     while (1){
         if (turn){
             printf("%s-------------round %d-------------\n%s",COLOR_RED, round++, COLOR_RESET);
-            //colored_printS("--------------------------\n", rand() % 6);
             skill_menu();
             skill = input_c("Your turn!");
             active = myChara;
@@ -115,7 +114,7 @@ void interacts_E(mrEntity *myChara, mrEntity *myEnemy, cJSON *json_inv){
             if (active->myAttr->heal)
                 skill_heal(active);
             else{
-                colored_printS("You can't heal yourself anymore, running out of heal times\n", 2);
+                colored_printS("You can't heal yourself anymore, running out of heal times\n", 31, 0);
                 continue;
             }
             break;
@@ -127,10 +126,10 @@ void interacts_E(mrEntity *myChara, mrEntity *myEnemy, cJSON *json_inv){
 
         if (receiver_hp <= 0){
             if (turn){
-                colored_printS("You win!\n", 0);
+                colored_printS("You win!\n", 32, 0);
                 battle_reward(json_inv);
             }else{
-                colored_printS("You lose.\n", 2);
+                colored_printS("You lose.\n", 31, 0);
             }
             break;
         }
@@ -140,7 +139,14 @@ void interacts_E(mrEntity *myChara, mrEntity *myEnemy, cJSON *json_inv){
         putchar(10);
     }
 }
-void interacts_M(){}
+
+void interacts_M(cJSON *json_inv){
+    int count = 3;
+    char *sample[] = {"bronze", "iron", "gold"};
+    int weight[] = {50, 40, 10};
+    int index = weighted_randA(weight, count);
+    inv_addItem(json_inv, sample[index], gen_randomInt(8, 15));
+}
 
 /*cJSON *chara_load(mrEntity *myChara){
     cJSON *json_CharaAttr = file2Json(CHARACTER_JSON);
