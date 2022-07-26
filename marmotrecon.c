@@ -21,36 +21,43 @@ int main(void){
     myEnemy->myAttr = (mrAttr*) malloc (sizeof(mrAttr));
 /***********************************************/
 
-    char c;
-    while (1){
-        puts("\n\
+    char *main_menu = "\n\
     1. New game\n\
     2. Load\n\
-    3. Quit\n\
-    ");
-        c = input_c("\0");
-        if (c == '1'){ // new game
+    3. Quit\n";
+    bool ifContinue = true;
+    while (ifContinue){
+        switch (input_c(main_menu))
+        {
+        case '1': {
             json_main = saveSelector(true);
-            if (json_main == NULL)
+            if (json_main == NULL){
+                colored_printS("Failed to create save file\n", 31, 0);
                 continue;
+            }
             map_init(myMap); // generate map
             cJSON_AddItemToObject(json_main, "Map", map_write(myMap)); // add map to json_main
             save2file(json_main);
+            ifContinue = false;
             break;
         }
-        else if (c == '2'){ // load game
+        case '2': {
             json_main = saveSelector(false);
             if (json_main == NULL)
+                if (json_main == NULL){
+                colored_printS("Failed to load save file\n", 31, 0);
                 continue;
+            }
             map_load(myMap, cJSON_GetObjectItem(json_main, "Map"));
+            ifContinue = false;
             break;
         }
-        else if (c == '3'){
+        case '3': {
             puts("Terminating the program...");
             return 0;
         }
-        else {
-            c = input_c("\0");
+        default:
+            ;
         }
     }
     putchar(10);
@@ -70,9 +77,19 @@ int main(void){
         switch ( move( myMap, myChara->position, dir ) )
         {
             case 'E':
-                colored_printS("Enemy found, get into fight!\n", 33, 0);
-                interacts_E(myChara, myEnemy, json_inv);
+            {
+                colored_printS("Enemy found!\n", 33, 0);
+                switch (input_c("1. fight\n2. run away"))
+                {
+                case '1':
+                    interacts_E(myChara, myEnemy, json_inv);
+                    break;
+                case '2':
+                default:
+                    break;
+                }
                 break;
+            }
             case 'M':
                 puts("Mineral");
                 interacts_M(json_inv);

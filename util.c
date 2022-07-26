@@ -3,7 +3,7 @@
 cJSON *file2Json(char *filename)
 {
     if (access(filename, R_OK) == -1)
-        printf("\033[;31mACCESS\033[0m: No such file %s", filename);
+        fprintf(stderr, "%sACCESS%s: No such file %s\n",COLOR_RED, COLOR_RESET, filename);
     else
     {
         FILE *fp = fopen(filename, "r");
@@ -111,7 +111,7 @@ int weighted_randA(int *weight, int count){
 
 int weighted_rand2DA(int *weight, int count){
     int r = rand() % 101;
-    printf("r= %d\n", r);
+    //printf("r= %d\n", r);
     int wR = 0;
     for (int i = 0; i<count; ++i){
         wR += weight[i];
@@ -124,7 +124,7 @@ int weighted_rand2DA(int *weight, int count){
 void weighted_rand3DA(char *(*sample)[3], double *weight, int *shape, char *target){
     puts(sample[rand() % shape[0]][rand() % shape[1]]);
     int r = rand() % 101;
-    printf("r= %d\n", r);
+    //printf("r= %d\n", r);
     int wR = 0;
     for (int row = 0; row < shape[0]; ++row){
         wR += weight[row];
@@ -136,12 +136,3 @@ void weighted_rand3DA(char *(*sample)[3], double *weight, int *shape, char *targ
         }
     }
 }
-
-//void colored_print()
-
-
-/*int main(void){
-    cJSON *json = file2Json("CharaAttr.json");
-    puts(cJSON_Print(json));
-    return 0;
-}*/

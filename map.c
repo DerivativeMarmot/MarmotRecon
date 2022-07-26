@@ -68,6 +68,7 @@ void map_print(mrMap *myMap, int *pos)
         putchar(10);
     }
     colored_printS("--------------------------\n", rand() % 6 + 31, 0);
+    printf("current position: (%d, %d)", pos[0], pos[1]);
 }
 
 cJSON *map_write( mrMap *myMap){
@@ -141,14 +142,3 @@ void map_menu(){
     q: quit\n\
     ");
 }
-
-/*int main(void){
-    marmotRecon *myMR;
-    myMR->myMap = (mrMap*) malloc (sizeof(mrMap));
-    myMR->myChara = (mrEntity*) malloc (sizeof(mrEntity));
-    srand((unsigned)time(NULL));
-    
-    mrMap_gen_raw(myMR->myMap);
-    mrMap_print(myMR->myMap);
-    return 0;
-}*/

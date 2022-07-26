@@ -2,36 +2,40 @@
 //#include "util.h"
 
 char move(mrMap *myMap, int *pos, char direction){
-    int height = myMap->shape[0];
-    if (direction == 'w'){
-        if (pos[0] == 0){
+    switch (direction)
+    {
+    case 'w': {
+        if (pos[0] == 0)
             return 'x';
-        }else{
+        else
             --pos[0];
-        }
+        break;
     }
-    else if (direction == 's'){
-        if (pos[0] == height - 1){
+    case 's': {
+        if (pos[0] == myMap->shape[0] - 1) // height
             return 'x';
-        }else{
+        else
             ++pos[0];
-        }
+        break;
     }
-    else if (direction == 'a'){
+    case 'a': {
         if (pos[1] == 0)
             return 'x';
-        else{
+        else
             --pos[1];
-        }
+        break;
     }
-    else if (direction == 'd'){
+    case 'd': {
         // [pos[0] + 1] means the length of current row, for example 6
         // [pos[0] + 1] - 1 means the max index is 6-1=5
-        if (pos[1] == myMap->shape[pos[0] + 1] - 1){
+        if (pos[1] == myMap->shape[pos[0] + 1] - 1)
             return 'x';
-        }else{
+        else
             ++pos[1];
-        }
+        break;
+    }
+    default:
+        break;
     }
     myMap->map_bool[pos[0]][pos[1]] = '1';
     return myMap->map_clear[pos[0]][pos[1]];

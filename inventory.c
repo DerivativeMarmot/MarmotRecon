@@ -51,8 +51,3 @@ void inv_menu(){
     1. \
     ");
 }
-/*int main(void){
-    cJSON *json;
-
-    return 0;
-}*/

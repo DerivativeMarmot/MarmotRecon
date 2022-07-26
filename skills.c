@@ -24,7 +24,7 @@ double skill_attack(mrEntity *active, mrEntity *passive){
         if (rand() % 100 <= active->myAttr->crit)
         {
             atk *= active->myAttr->crit_dmg;
-            printf("%s%s deals a critical hit\n%s", COLOR_RED, active->name, COLOR_RESET);
+            printf("%s*%s deals a critical hit*\n%s", COLOR_RED, active->name, COLOR_RESET);
         }
         passive->myAttr->health = passive->myAttr->health - atk < 0 ? 0 : passive->myAttr->health - atk;
 
@@ -69,5 +69,5 @@ void skill_heal(mrEntity *active){
     myAttr->health += (myAttr->max_health - myAttr->health) / 2.0;
     myAttr->heal = false;
     printf("%s%s healed himself%s\n", COLOR_GREEN, active->name, COLOR_RESET);
-    printf("health: %.2f",  myAttr->health);
+    printf("health: %.2f\n",  myAttr->health);
 }
