@@ -135,7 +135,7 @@ void interacts_E(mrEntity *myChara, mrEntity *myEnemy, cJSON *json_inv){
         }
 
         turn = !turn;
-        colored_printS("TURN CHANGE\n", 1);
+        colored_printS("TURN CHANGE\n", 33, 0);
         putchar(10);
     }
 }
@@ -146,6 +146,19 @@ void interacts_M(cJSON *json_inv){
     int weight[] = {50, 40, 10};
     int index = weighted_randA(weight, count);
     inv_addItem(json_inv, sample[index], gen_randomInt(8, 15));
+}
+
+void interacts_G(cJSON *json_inv){
+    int shape[2] = {3, 3};
+    char *sample[][3] = {
+        {"3_0", "3_1", "3_2"}, 
+        {"4_0", "4_1", "4_2"}, 
+        {"5_0", "5_1", "5_2"}
+    };
+    double weight[] = {75, 24, 1};
+    char target[100];
+    weighted_rand3DA(sample, weight, shape, target);
+    printf("%sYou got %s!\n%s", COLOR_CYAN, target, COLOR_RESET);
 }
 
 /*cJSON *chara_load(mrEntity *myChara){

@@ -109,6 +109,34 @@ int weighted_randA(int *weight, int count){
     }
 }
 
+int weighted_rand2DA(int *weight, int count){
+    int r = rand() % 101;
+    printf("r= %d\n", r);
+    int wR = 0;
+    for (int i = 0; i<count; ++i){
+        wR += weight[i];
+        if (wR >= r){
+            return i;
+        }
+    }
+}
+
+void weighted_rand3DA(char *(*sample)[3], double *weight, int *shape, char *target){
+    puts(sample[rand() % shape[0]][rand() % shape[1]]);
+    int r = rand() % 101;
+    printf("r= %d\n", r);
+    int wR = 0;
+    for (int row = 0; row < shape[0]; ++row){
+        wR += weight[row];
+        if (wR >= r){
+            int col = rand() % shape[1];
+            //puts(sample[row][col]);
+            memcpy(target, sample[row][col], strlen(sample[row][col]) + 1);
+            break;
+        }
+    }
+}
+
 //void colored_print()
 
 

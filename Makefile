@@ -1,5 +1,6 @@
 EXE=marmotrecon.mrexe
 OBJ=marmotrecon.o savemgr.o character.o map.o battle.o inventory.o skills.o util.o cJSON.o   
+BLDD=build
 
 all: $(EXE)
 
@@ -27,7 +28,7 @@ inventory.o: inventory.c util.o
 skills.o: skills.c util.o
 	gcc -c skills.c
 
-util.o: util.c recon_info.h cJSON.o
+$(BLDD)/util.o: util.c recon_info.h cJSON.o
 	gcc -c util.c
 
 cJSON.o: cJSON/cJSON.c
@@ -35,3 +36,6 @@ cJSON.o: cJSON/cJSON.c
 
 clean:
 	rm $(EXE) $(OBJ)
+
+init:
+	mkdir BLDD

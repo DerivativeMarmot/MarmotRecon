@@ -103,7 +103,7 @@ cJSON *userInit(char *savepath){
 
     // create attribute
     cJSON *json_attr  = cJSON_CreateObject();
-    double max_health = gen_randomInt(20, 25);
+    double max_health = gen_randomInt(50, 60);
     cJSON_AddNumberToObject(json_attr, "max_health", max_health);
     cJSON_AddNumberToObject(json_attr, "health", max_health);
     cJSON_AddNumberToObject(json_attr, "atk", gen_randomInt(5, 8));

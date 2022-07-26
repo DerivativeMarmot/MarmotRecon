@@ -75,7 +75,13 @@ int main(void){
                 break;
             case 'M':
                 puts("Mineral");
+                interacts_M(json_inv);
                 break;
+            case 'G':{
+                puts("Gacha");
+                interacts_G(json_inv);
+                break;
+            }
             case '*':
                 puts("None");
                 break;

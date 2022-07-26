@@ -28,9 +28,9 @@ void map_init(mrMap *myMap){
         memset(myMap->map_bool[i], '0', sizeof(char) * width);
 
         // initialize each position
-        char target[] = {'E','M','*'};
-        int weight[] = {10, 20, 70}; // 100 in total
-        int count = 3;
+        char target[] = {'E','M','G','*'}; // sample
+        int weight[] = {10, 20, 5, 65}; // weight, 100 in total
+        int count = 4; // sample size
         for (int j = 0; j<width; ++j){
             myMap->map_clear[i][j] = weighted_randC(target, weight, count);
         }
@@ -137,7 +137,7 @@ void map_menu(){
     w: go up\n\
     s: go down\n\
     a: go left\n\
-    d: go right\
+    d: go right\n\
     q: quit\n\
     ");
 }
