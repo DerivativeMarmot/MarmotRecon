@@ -30,5 +30,6 @@ int gen_randomInt(int , int );
 double gen_randomDouble(double , double );
 char weighted_randC(char *, int *, int );
 int weighted_randA(int *, int );
+void weighted_rand3DA(char *(*)[3], double *, int *, char *);
 
 #endif

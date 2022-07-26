@@ -65,7 +65,7 @@ void colored_printC(char prompt, int color, int option){
     if (color >= 31 && color <= 36 || color >= 41 && color <= 46)
         printf("\033[%d;%dm%c\033[0m", option, color, prompt);
     else
-        puts(prompt);
+        putchar(prompt);
 }
 
 void colored_printS(char *prompt, int color, int option){

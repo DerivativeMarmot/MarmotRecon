@@ -1,2 +1,4 @@
 *.mrexe
 *.o
+*test*
+savedata/
