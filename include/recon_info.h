@@ -9,13 +9,13 @@
 #include <sys/stat.h> // mkdir()
 #include <unistd.h> // access()
 
-#include "cJSON/cJSON.h"
+#include "cJSON.h"
 
 #define USER_JSON "User.json"
 #define ITEM_JSON "Item.json"
 #define RECIPE_JSON "RecipeBook.json"
 #define MAX_SAVE 3
-#define COMMON_PATH "savedata/save%d/"
+#define COMMON_PATH "resources/savedata/save%d/"
 #define COLOR_GREEN "\033[;32m"
 #define COLOR_RED "\033[;31m"
 #define COLOR_YELLOW "\033[;33m"

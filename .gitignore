@@ -1,4 +1,10 @@
+# FILE
 *.mrexe
 *.o
-*test*
-savedata/
+
+# FOLDER
+test/
+resources/savedata/
+build/
+bin/
+backup/

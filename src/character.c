@@ -2,7 +2,7 @@
 //#include "util.h"
 
 char move(mrMap *myMap, int *pos, char direction){
-    switch (direction)
+    switch (direction)//
     {
     case 'w': {
         if (pos[0] == 0)

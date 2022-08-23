@@ -1,41 +1,47 @@
-EXE=marmotrecon.mrexe
-OBJ=marmotrecon.o savemgr.o character.o map.o battle.o inventory.o skills.o util.o cJSON.o   
-BLDD=build
+CC = gcc -c -I include/
+SRC = src/
+OBJ = build/
+BIN = bin/
+HEADER = include/
+EXE=$(BIN)marmotrecon.mrexe
+
+SOURCEFILES = $(shell find $(SRC) -type f -name "*.c")
+OBJECTFILES = $(patsubst $(SRC)%.c,$(OBJ)%.o,$(SOURCEFILES))
 
 all:$(EXE)
 
-marmotrecon.mrexe: $(OBJ)
-	gcc $(OBJ) -o marmotrecon.mrexe
+$(EXE): $(OBJECTFILES)
+	gcc $(OBJECTFILES) -o $(EXE)
 
-marmotrecon.o: marmotrecon.c character.o savemgr.o
-	gcc -c marmotrecon.c
+$(OBJ)marmotrecon.o: $(SRC)marmotrecon.c $(OBJ)character.o $(OBJ)savemgr.o
+	$(CC) $(SRC)marmotrecon.c -o $(OBJ)marmotrecon.o
 
-savemgr.o: savemgr.c savemgr.h util.o
-	gcc -c savemgr.c
+$(OBJ)savemgr.o: $(SRC)savemgr.c $(HEADER)savemgr.h $(OBJ)util.o
+	$(CC) $(SRC)savemgr.c -o $(OBJ)savemgr.o
 
-character.o: character.c character.h map.o battle.o
-	gcc -c character.c
+$(OBJ)character.o: $(SRC)character.c $(HEADER)character.h $(OBJ)map.o $(OBJ)battle.o
+	$(CC) $(SRC)character.c -o $(OBJ)character.o
 
-map.o: map.c map.h util.o
-	gcc -c map.c
+$(OBJ)map.o: $(SRC)map.c $(HEADER)map.h $(OBJ)util.o
+	$(CC) $(SRC)map.c -o $(OBJ)map.o
 
-battle.o: battle.c battle.h skills.o inventory.o
-	gcc -c battle.c
+$(OBJ)battle.o: $(SRC)battle.c $(HEADER)battle.h $(OBJ)skills.o $(OBJ)inventory.o
+	$(CC) $(SRC)battle.c -o $(OBJ)battle.o
 
-inventory.o: inventory.c inventory.h util.o
-	gcc -c inventory.c
+$(OBJ)inventory.o: $(SRC)inventory.c $(HEADER)inventory.h $(OBJ)util.o
+	$(CC) $(SRC)inventory.c -o $(OBJ)inventory.o
 
-skills.o: skills.c skills.h util.o
-	gcc -c skills.c
+$(OBJ)skills.o: $(SRC)skills.c $(HEADER)skills.h $(OBJ)util.o
+	$(CC) $(SRC)skills.c -o $(OBJ)skills.o
 
-util.o: util.c util.h recon_info.h cJSON.o
-	gcc -c util.c
+$(OBJ)util.o: $(SRC)util.c $(HEADER)util.h $(HEADER)recon_info.h $(OBJ)cJSON.o
+	$(CC) $(SRC)util.c -o $(OBJ)util.o
 
-cJSON.o: cJSON/cJSON.c
-	gcc -c cJSON/cJSON.c
+$(OBJ)cJSON.o: $(SRC)cJSON.c
+	$(CC) $(SRC)cJSON.c -o $(OBJ)cJSON.o
 
 clean:
-	rm $(EXE) $(OBJ)
+	rm $(OBJ)*
 
 init:
-	mkdir $(BLDD)
+	mkdir $(OBJ) $(BIN)
