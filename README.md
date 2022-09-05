@@ -27,6 +27,7 @@
   - [其他](#其他)
     - [collect2.exe: error: ld returned 1 exit status](#collect2exe-error-ld-returned-1-exit-status)
   - [log](#log)
+  - [新增角色装备系统](#新增角色装备系统)
   - [TODO:](#todo)
 
 ---
@@ -261,6 +262,11 @@ battle reward
 完成了 G 点的抽奖模板
 日常维护
 
+**2022-9-3**
+重命名了 struct
+header 文件，给部分函数添加 identifier
+savemgr.h 新增 delete_save 函数
+新增角色装备系统
 ---
 
 ## TODO:

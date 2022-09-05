@@ -6,16 +6,16 @@ void skill_menu();
 
 // dir == 1 c attacks e, otherwise e attcks c
 // returns the health value of who is attacked;
-double skill_attack(mrEntity *, mrEntity *);
+double skill_attack(mrEntity_t *, mrEntity_t *);
 
 // Avoid receiving next damage from enemy
-void skill_duck(mrEntity *);
+void skill_duck(mrEntity_t *);
 
-void skill_powerUp(mrEntity *);
-void skill_powerDown(mrEntity *);
+void skill_powerUp(mrEntity_t *);
+void skill_powerDown(mrEntity_t *);
 void skill_armor();
 
 // can only be used once in one battle
-void skill_heal(mrEntity *);
+void skill_heal(mrEntity_t *);
 
 #endif

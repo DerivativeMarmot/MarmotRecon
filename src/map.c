@@ -1,6 +1,6 @@
 #include "map.h"
 
-void map_init(mrMap *myMap){
+void map_init(mrMap_t *myMap){
     int HEIGHT_MIN = 6;
     int HEIGHT_MAX = 10;
     int WIDTH_MIN = 16;
@@ -22,7 +22,7 @@ void map_init(mrMap *myMap){
         myMap->shape[i+1] = width;
         
         myMap->map_clear[i] = (char*)malloc(sizeof(char) * (width + 1));
-        myMap->map_bool[i] = (char*)malloc(sizeof(char) * (width));
+        myMap->map_bool[i] = (char*)malloc(sizeof(char) * (width + 1));
 
         // initialize all position to false (unvisited)
         memset(myMap->map_bool[i], '0', sizeof(char) * width);
@@ -51,7 +51,7 @@ void map_init(mrMap *myMap){
     }
 }
 
-void map_print(mrMap *myMap, int *pos)
+void map_print(mrMap_t *myMap, int *pos)
 {
     for (int i = 0; i < (myMap->shape[0]); ++i)
     {
@@ -71,7 +71,7 @@ void map_print(mrMap *myMap, int *pos)
     printf("current position: (%d, %d)", pos[0], pos[1]);
 }
 
-cJSON *map_write( mrMap *myMap){
+cJSON *map_write( mrMap_t *myMap){
     cJSON *map_json = cJSON_CreateObject();
     cJSON_AddItemToObject(map_json, "shape", cJSON_CreateIntArray(myMap->shape, myMap->shape[0] + 1));
     cJSON_AddItemToObject(map_json, "clear", cJSON_CreateStringArray(myMap->map_clear, myMap->shape[0]));
@@ -80,7 +80,7 @@ cJSON *map_write( mrMap *myMap){
     return map_json;
 }
 
-void map_load(mrMap *myMap, cJSON *json_map){
+void map_load(mrMap_t *myMap, cJSON *json_map){
     cJSON *json_shape = cJSON_GetArrayItem(cJSON_GetObjectItemCaseSensitive(json_map, "shape"), 0);
     cJSON *json_clear = cJSON_GetArrayItem(cJSON_GetObjectItemCaseSensitive(json_map, "clear"), 0);
     cJSON *json_bool = cJSON_GetArrayItem(cJSON_GetObjectItemCaseSensitive(json_map, "bool"), 0);

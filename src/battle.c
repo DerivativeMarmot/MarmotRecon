@@ -1,7 +1,7 @@
 #include "battle.h"
 
-void enemy_init(mrEntity *myEnemy){
-    mrAttr *myAttr = myEnemy->myAttr;
+void enemy_init(mrEntity_t *myEnemy){
+    mrAttr_t *myAttr = myEnemy->myAttr;
     memcpy(myEnemy->name, "Bad marmot", strlen("Bad marmot")+1);
     myAttr->max_health = gen_randomInt(20, 25);
     myAttr->health = myAttr->max_health;

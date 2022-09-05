@@ -6,25 +6,26 @@ int main(void){
 
     cJSON *json_main;
     
-    marmotRecon *myMR = (marmotRecon*) malloc (sizeof(marmotRecon));
+    mr_t *myMR = (mr_t*) malloc (sizeof(mr_t));
 
-    mrMap *myMap = myMR->myMap;
-    mrEntity *myChara = myMR->myChara;
-    mrEntity *myEnemy = myMR->myEnemy;
+    mrMap_t *myMap = myMR->myMap;
+    mrEntity_t *myChara = myMR->myChara;
+    mrEntity_t *myEnemy = myMR->myEnemy;
 
-    myMap = (mrMap*) malloc (sizeof(mrMap));
+    myMap = (mrMap_t*) malloc (sizeof(mrMap_t));
 
-    myChara = (mrEntity*) malloc (sizeof(mrEntity));
-    myChara->myAttr = (mrAttr*) malloc (sizeof(mrAttr));
+    myChara = (mrEntity_t*) malloc (sizeof(mrEntity_t));
+    myChara->myAttr = (mrAttr_t*) malloc (sizeof(mrAttr_t));
 
-    myEnemy = (mrEntity*) malloc (sizeof(mrEntity));
-    myEnemy->myAttr = (mrAttr*) malloc (sizeof(mrAttr));
+    myEnemy = (mrEntity_t*) malloc (sizeof(mrEntity_t));
+    myEnemy->myAttr = (mrAttr_t*) malloc (sizeof(mrAttr_t));
 /***********************************************/
 
     char *main_menu = "\n\
     1. New game\n\
     2. Load\n\
-    3. Quit\n";
+    3. Delete\n\
+    q. Quit\n";
     bool ifContinue = true;
     while (ifContinue){
         switch (input_c(main_menu))
@@ -53,7 +54,12 @@ int main(void){
             break;
         }
         case '3': {
+            delete_save();
+            break;
+        }
+        case 'q': {
             puts("Terminating the program...");
+            puts("Good bye");
             return 0;
         }
         default:
@@ -70,7 +76,7 @@ int main(void){
     map_print(myMap, myChara->position);
     while (1){
         map_menu();
-        char dir = input_c("\0");
+        char dir = input_c("\0"); // direction
         if (dir == 'q')
             break;
         
@@ -111,9 +117,13 @@ int main(void){
         
         map_print(myMap, myChara->position);
     }
+
+    // save current staus to file
     cJSON_ReplaceItemInObjectCaseSensitive(json_main, "Map", map_write(myMap));
     chara_write(json_main, myChara);
     save2file(json_main);
+
+    // free
 
     return 0;
 }

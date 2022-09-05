@@ -1,7 +1,7 @@
 #include "character.h"
 //#include "util.h"
 
-char move(mrMap *myMap, int *pos, char direction){
+char move(mrMap_t *myMap, int *pos, char direction){
     switch (direction)//
     {
     case 'w': {
@@ -41,14 +41,14 @@ char move(mrMap *myMap, int *pos, char direction){
     return myMap->map_clear[pos[0]][pos[1]];
 }
 
-void chara_load(cJSON *json_chara, mrEntity *myChara){
+void chara_load(cJSON *json_chara, mrEntity_t *myChara){
     cJSON *json_position = cJSON_GetObjectItem(json_chara, "position");
     myChara->position[0] = cJSON_GetNumberValue(cJSON_GetArrayItem(json_position, 0));
     myChara->position[1] = cJSON_GetNumberValue(cJSON_GetArrayItem(json_position, 1));
 
     memcpy(myChara->name, cJSON_GetStringValue(cJSON_GetObjectItem(json_chara, "name")), 21);
 
-    mrAttr *myAttr = myChara->myAttr;
+    mrAttr_t *myAttr = myChara->myAttr;
     cJSON *json_attr = cJSON_GetObjectItem(json_chara, "Attribute");
     myAttr->max_health = cJSON_GetNumberValue(cJSON_GetObjectItem(json_attr, "max_health"));
     myAttr->health = cJSON_GetNumberValue(cJSON_GetObjectItem(json_attr, "health"));
@@ -59,14 +59,14 @@ void chara_load(cJSON *json_chara, mrEntity *myChara){
     myAttr->heal = true;
 }
 
-void chara_write(cJSON *json_chara, mrEntity *myChara){
+void chara_write(cJSON *json_chara, mrEntity_t *myChara){
     // replace pos
     cJSON *json_position = cJSON_CreateIntArray(myChara->position, 2);
     cJSON_ReplaceItemInObjectCaseSensitive(json_chara, "position", json_position);
 
     // replace attr
     cJSON *json_attr = cJSON_CreateObject();
-    mrAttr *myAttr = myChara->myAttr;
+    mrAttr_t *myAttr = myChara->myAttr;
     cJSON_AddNumberToObject(json_attr, "health", myAttr->health);
     cJSON_AddNumberToObject(json_attr, "atk", myAttr->atk);
     cJSON_AddNumberToObject(json_attr, "crit", myAttr->crit);
@@ -74,16 +74,16 @@ void chara_write(cJSON *json_chara, mrEntity *myChara){
     cJSON_ReplaceItemInObjectCaseSensitive(json_chara, "Attribute", json_attr);
 }
 
-/*void interacts(mrMap *myMap, mrEntity *myChara, mrEntity *myEnemy){
+/*void interacts(mrMap_t *myMap, mrEntity_t *myChara, mrEntity_t *myEnemy){
     ;
 }*/
 
-void interacts_E(mrEntity *myChara, mrEntity *myEnemy, cJSON *json_inv){
+void interacts_E(mrEntity_t *myChara, mrEntity_t *myEnemy, cJSON *json_inv){
     enemy_init(myEnemy);
     bool turn = true; // 1 chara turn, 0 enemy turn.
     double receiver_hp;
     char skill;
-    mrEntity *active, *passive;
+    mrEntity_t *active, *passive;
     int round = 1;
     while (1){
         if (turn){
@@ -165,20 +165,6 @@ void interacts_G(cJSON *json_inv){
     printf("%sYou got %s!\n%s", COLOR_CYAN, target, COLOR_RESET);
 }
 
-/*cJSON *chara_load(mrEntity *myChara){
-    cJSON *json_CharaAttr = file2Json(CHARACTER_JSON);
-}
-void chara_write(){;}*/
-
-/*char goUp(mrMap *myMap){
+void show_property(mrEntity_t *myChara){
     ;
 }
-char goDown(mrMap *myMap){
-    ;
-}
-char goLeft(mrMap *myMap){
-    ;
-}
-char goRight(mrMap *myMap){
-    ;
-}*/

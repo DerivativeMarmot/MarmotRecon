@@ -3,12 +3,12 @@
 #include "map.h"
 #include "battle.h"
 
-char move(mrMap *, int *, char );
-void chara_load(cJSON *, mrEntity *);
-void chara_write(cJSON *, mrEntity *);
-//void interacts(mrMap *, mrEntity *, mrEntity *);
-void interacts_E(mrEntity *, mrEntity *, cJSON *);
+char move(mrMap_t *, int *, char );
+void chara_load(cJSON *, mrEntity_t *);
+void chara_write(cJSON *, mrEntity_t *);
+void interacts_E(mrEntity_t *, mrEntity_t *, cJSON *);
 void interacts_M(cJSON *json_inv);
 void interacts_G(cJSON *json_inv);
+void show_property(mrEntity_t *myChara);
 
 #endif

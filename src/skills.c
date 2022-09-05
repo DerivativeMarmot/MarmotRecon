@@ -10,7 +10,7 @@ void skill_menu(){
     ");
 }
 
-double skill_attack(mrEntity *active, mrEntity *passive){
+double skill_attack(mrEntity_t *active, mrEntity_t *passive){
     printf("%s%s is attacking %s%s\n", COLOR_RED, active->name, passive->name, COLOR_RESET);
     if (passive->myAttr->duck)
     {
@@ -34,13 +34,13 @@ double skill_attack(mrEntity *active, mrEntity *passive){
     return passive->myAttr->health;
 }
 
-void skill_duck(mrEntity *active){
+void skill_duck(mrEntity_t *active){
     printf("%s%s duck point +1%s\n", COLOR_CYAN, active->name, COLOR_RESET);
     active->myAttr->duck = true;
 }
 
-void skill_powerUp(mrEntity *active){
-    mrAttr *myAttr = active->myAttr;
+void skill_powerUp(mrEntity_t *active){
+    mrAttr_t *myAttr = active->myAttr;
     myAttr->health -= 5;
     myAttr->crit += 5;
     myAttr->atk += 2;
@@ -52,8 +52,8 @@ void skill_powerUp(mrEntity *active){
     ", myAttr->health, myAttr->crit, myAttr->atk);
 }
 
-void skill_powerDown(mrEntity *active){
-    mrAttr *myAttr = active->myAttr;
+void skill_powerDown(mrEntity_t *active){
+    mrAttr_t *myAttr = active->myAttr;
     myAttr->health += 5;
     myAttr->crit -= 5;
     myAttr->atk -= 2;
@@ -64,8 +64,8 @@ void skill_powerDown(mrEntity *active){
     atk: %.2f\n", myAttr->health, myAttr->crit, myAttr->atk);
 }
 
-void skill_heal(mrEntity *active){
-    mrAttr *myAttr = active->myAttr;
+void skill_heal(mrEntity_t *active){
+    mrAttr_t *myAttr = active->myAttr;
     myAttr->health += (myAttr->max_health - myAttr->health) / 2.0;
     myAttr->heal = false;
     printf("%s%s healed himself%s\n", COLOR_GREEN, active->name, COLOR_RESET);
