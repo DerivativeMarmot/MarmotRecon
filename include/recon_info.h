@@ -45,7 +45,7 @@ typedef struct {
     bool heal;
 } mrAttr_t;
 /*****************************************/
-typedef struct {
+/*typedef struct {
     char *name;
     double attack;
 } mrWeapon_t;
@@ -53,10 +53,15 @@ typedef struct {
 typedef struct {
     ;
 } mrAccessory_t;
-
+*/
 typedef struct {
-    mrWeapon_t *myWeapon;
-    mrAccessory_t *myAccessory;
+    struct {
+        char *name;
+        double attack;
+    } *myWeapon;
+    struct {
+        ;
+    } *myAccessory;
 } mrEquipment_t;
 /*****************************************/
 typedef struct {

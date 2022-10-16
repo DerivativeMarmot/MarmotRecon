@@ -1,5 +1,6 @@
 # MARMOT RECON
 - [MARMOT RECON](#marmot-recon)
+  - [开始游戏](#开始游戏)
   - [模块](#模块)
   - [地图](#地图)
     - [简介](#简介)
@@ -31,6 +32,13 @@
   - [TODO:](#todo)
 
 ---
+
+## 开始游戏
+```shell
+> git clone https://github.com/DerivativeMarmot/MarmotRecon.git
+> cd MarmotRecon
+> make init && make && bin/marmotrecon.mrexe
+```
 
 ## 模块
 ```mermaid

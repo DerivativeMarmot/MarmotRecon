@@ -103,12 +103,15 @@ cJSON *userInit(char *savepath){
         }
     } while(1);
     cJSON_AddStringToObject(user_json, "name", username);
+
     // create savepath
     cJSON_AddStringToObject(user_json, "savepath", savepath);
+
     // create position
     int pos[2] = {0, 0};
     cJSON_AddItemToObject(user_json, "position", cJSON_CreateIntArray(pos, 2));
-    // create inv
+
+    // create inventory
     cJSON_AddItemToObject(user_json, "Inventory", cJSON_CreateObject());
 
     // create attribute
@@ -120,6 +123,15 @@ cJSON *userInit(char *savepath){
     cJSON_AddNumberToObject(json_attr, "crit", gen_randomDouble(5, 10));
     cJSON_AddNumberToObject(json_attr, "crit_dmg", 1.5);
     cJSON_AddItemToObject(user_json, "Attribute", json_attr);
+
+    // create basic weapon
+    cJSON *json_weapon = cJSON_CreateObject();
+    const char *const weapon_name = "Edgeless Sword";
+    cJSON *json_basic_weapon = cJSON_CreateObject();
+    cJSON_AddStringToObject(json_basic_weapon, "name", weapon_name);
+    cJSON_AddNumberToObject(json_basic_weapon, "attack_damage", gen_randomInt(1, 3));
+    cJSON_AddItemToObject(json_weapon, weapon_name, json_basic_weapon);
+    cJSON_AddItemToObject(user_json, "Weapon", json_weapon);
 
     return user_json;
 }
